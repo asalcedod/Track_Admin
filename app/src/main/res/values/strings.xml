@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Track_Admin</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="logout">Cerrar sesion</string>
+</resources>
