@@ -3,6 +3,7 @@ package com.uninorte.carlos.track_admin;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,7 +27,7 @@ public class filterActivity extends AppCompatActivity {
     String diain;
     String mesin;
     String añoin;
-    int diafi;
+    int diafi,i=0,j=0,k=0;
     String mesfi;
     String añofi;
     String horain,minin,horafi,minfi,key,key1,key2;
@@ -38,6 +39,7 @@ public class filterActivity extends AppCompatActivity {
     int minMonth = 0; // january
     int minDay = 25;
     private DatePicker BirthDateDP;
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +56,10 @@ public class filterActivity extends AppCompatActivity {
         mini = (Spinner) findViewById(R.id.mini);
         horaf = (Spinner) findViewById(R.id.horaf);
         minf = (Spinner) findViewById(R.id.minf);
+        mToolbar = (Toolbar) findViewById(R.id.activity_filter_toolbar);
+
+        mToolbar.setTitle("Filtro");
+        setSupportActionBar(mToolbar);
         List<String> dias = new ArrayList<String>();
         dias.add("Dia");
         for(int i=0;i<31;i++){
@@ -70,6 +76,8 @@ public class filterActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 diain = parent.getItemAtPosition(position).toString();
+                i=position;
+                diaf.setSelection(i);
             }
 
             @Override
@@ -107,6 +115,8 @@ public class filterActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mesin = parent.getItemAtPosition(position).toString();
+                i=position;
+                mesf.setSelection(i);
             }
 
             @Override
@@ -140,6 +150,8 @@ public class filterActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 añoin = parent.getItemAtPosition(position).toString();
+                i=position;
+                añof.setSelection(i);
             }
 
             @Override
@@ -177,6 +189,8 @@ public class filterActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 horain = parent.getItemAtPosition(position).toString();
+                i=position;
+                horaf.setSelection(i);
             }
 
             @Override
@@ -214,6 +228,8 @@ public class filterActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 minin = parent.getItemAtPosition(position).toString();
+                i=position;
+                minf.setSelection(i);
             }
 
             @Override

@@ -41,6 +41,8 @@ public class SearchActivity extends AppCompatActivity implements Adapter.Recycle
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mToolbar.setTitle("Seleccione un Empleado");
+        setSupportActionBar(mToolbar);
         String nombre = getIntent().getStringExtra("name");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();

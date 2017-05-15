@@ -5,31 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <include
+        layout="@layout/tool_bar"
+        android:id="@+id/activity_filter_toolbar">
+    </include>
     <TextView
-        android:layout_margin="18dp"
+        android:layout_margin="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Seleccione la fecha inicial"
-        android:textSize="30dp"
+        android:text="Seleccione la Fecha Inicial"
+        android:textSize="28dp"
         />
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="18sp"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/diai"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            ></Spinner>
 
         <Spinner
             android:id="@+id/mesi"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"></Spinner>
 
         <Spinner
             android:id="@+id/añoi"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content">
 
         </Spinner>
@@ -41,12 +50,14 @@
         android:orientation="horizontal">
 
         <Spinner
+            android:layout_marginLeft="20dp"
             android:id="@+id/horai"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"></Spinner>
 
         <Spinner
+            android:layout_marginRight="20dp"
             android:id="@+id/mini"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -55,30 +66,36 @@
     </LinearLayout>
 
     <TextView
-        android:layout_margin="18dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Seleccione la fecha final"
-        android:textSize="30dp"
+        android:text="Seleccione la Fecha Final"
+        android:textSize="28dp"
         />
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_margin="18dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/diaf"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"></Spinner>
 
         <Spinner
             android:id="@+id/mesf"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content"></Spinner>
 
         <Spinner
             android:id="@+id/añof"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
             android:layout_height="wrap_content">
 
         </Spinner>
@@ -89,22 +106,32 @@
         android:orientation="horizontal">
 
         <Spinner
+            android:layout_marginLeft="20dp"
             android:id="@+id/horaf"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"></Spinner>
 
         <Spinner
+            android:layout_marginRight="20dp"
             android:id="@+id/minf"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"></Spinner>
 
     </LinearLayout>
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mostrar Mapa"
-        android:layout_gravity="center"
-        android:onClick="onClick"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            android:text="Mostrar Mapa"
+            android:layout_gravity="center"
+            android:layout_alignParentBottom="true"
+            android:onClick="onClick"/>
+    </RelativeLayout>
+
 </LinearLayout>
