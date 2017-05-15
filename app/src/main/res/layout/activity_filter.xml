@@ -16,13 +16,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Spinner
+            android:id="@+id/diai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></Spinner>
+
         <Spinner
+            android:id="@+id/mesi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></Spinner>
+
         <Spinner
+            android:id="@+id/añoi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -33,13 +39,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Spinner
-            android:id="@+id/activity_filter_spinner_houri"
+            android:id="@+id/horai"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"></Spinner>
+
         <Spinner
-            android:id="@+id/activity_filter_spinner_mini"
+            android:id="@+id/mini"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"></Spinner>
@@ -57,13 +65,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Spinner
+            android:id="@+id/diaf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></Spinner>
+
         <Spinner
+            android:id="@+id/mesf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></Spinner>
+
         <Spinner
+            android:id="@+id/añof"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -73,13 +87,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Spinner
-            android:id="@+id/activity_filter_spinner_hourf"
+            android:id="@+id/horaf"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"></Spinner>
+
         <Spinner
-            android:id="@+id/activity_filter_spinner_minf"
+            android:id="@+id/minf"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"></Spinner>
