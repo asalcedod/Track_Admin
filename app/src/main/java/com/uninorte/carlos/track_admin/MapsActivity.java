@@ -54,6 +54,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                LatLng latLng = new LatLng(10.98, -74.83);
+
                 for (DataSnapshot child :
                         dataSnapshot.getChildren()) {
                     String x=child.getKey().substring(0,child.getKey().length()-3);
@@ -65,7 +67,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         String lon=child.child("lon").getValue().toString();
                         //Log.d("FirebaseLog", "onDataChange: " + child.getKey());
                         rectOptions.add(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));
-
+                        latLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lon));
                     }
                     if(child.getKey().substring(0,child.getKey().length()-3).equals(ff) && sw==true) {
                         String lat=child.child("lat").getValue().toString();
@@ -74,7 +76,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         Log.d("FirebaseLog", "onDataChange: " + child.getKey());
                         rectOptions.add(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));
                     }
+
                 }
+
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
+
+                mMap.animateCamera(cameraUpdate);
                 Polyline polyline = mMap.addPolyline(rectOptions);
             }
 
@@ -115,32 +122,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-
-            } else {
-
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-
-            }
-        }
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
             mMap = googleMap;
             LatLng latLng = new LatLng(10.98, -74.83);
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
             googleMap.animateCamera(cameraUpdate);
-            googleMap.setMyLocationEnabled(true);
             googleMap.addMarker(new MarkerOptions().position(latLng).title("Here"));
-            mMap.setMyLocationEnabled(true);
-        } else {
-            // Show rationale and request permission.
-        }
+
 
 
     }
