@@ -55,6 +55,7 @@ public class filterActivity extends AppCompatActivity {
         horaf = (Spinner) findViewById(R.id.horaf);
         minf = (Spinner) findViewById(R.id.minf);
         List<String> dias = new ArrayList<String>();
+        dias.add("Dia");
         for(int i=0;i<31;i++){
             if(i<9) {
                 dias.add("0" + (i + 1));
@@ -91,6 +92,7 @@ public class filterActivity extends AppCompatActivity {
             }
         });
         List<String> meses = new ArrayList<String>();
+        meses.add("Mes");
         for(int i=0;i<12;i++){
             if(i<9) {
                 meses.add("0" + (i + 1));
@@ -127,6 +129,7 @@ public class filterActivity extends AppCompatActivity {
             }
         });
         List<String> años = new ArrayList<String>();
+        años.add("Año");
         for(int i=2010;i<2017;i++){
             años.add(""+(i+1));
         }
@@ -159,6 +162,7 @@ public class filterActivity extends AppCompatActivity {
             }
         });
         List<String> horas = new ArrayList<String>();
+        horas.add("Hora");
         for(int i=0;i<=23;i++){
             if(i<10) {
                 horas.add("0" + (i));
@@ -195,6 +199,7 @@ public class filterActivity extends AppCompatActivity {
             }
         });
         List<String> mins = new ArrayList<String>();
+        mins.add("Minuto");
         for(int i=0;i<=59;i++){
             if(i<10) {
                 mins.add("0" + (i));
