@@ -62,14 +62,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
                     if (!child.getKey().substring(0,child.getKey().length()-3).equals(ff) && sw==true) {
                         String lat=child.child("lat").getValue().toString();
-                        String lon=child.child("lon").getValue().toString().substring(1, child.child("lon").getValue().toString().length());
+                        String lon=child.child("lon").getValue().toString();
                         //Log.d("FirebaseLog", "onDataChange: " + child.getKey());
                         rectOptions.add(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));
 
                     }
                     if(child.getKey().substring(0,child.getKey().length()-3).equals(ff) && sw==true) {
                         String lat=child.child("lat").getValue().toString();
-                        String lon=child.child("lon").getValue().toString().substring(1, child.child("lon").getValue().toString().length());
+                        String lon=child.child("lon").getValue().toString();
                         sw = false;
                         Log.d("FirebaseLog", "onDataChange: " + child.getKey());
                         rectOptions.add(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));
