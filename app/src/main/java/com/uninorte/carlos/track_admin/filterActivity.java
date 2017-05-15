@@ -28,6 +28,7 @@ public class filterActivity extends AppCompatActivity {
 
     public void onClick(View view) {
         Intent intent = new Intent(this,MapsActivity.class);
+        intent.putExtra("name",getIntent().getStringExtra("name"));
         startActivity(intent);
         finish();
     }

@@ -74,7 +74,7 @@ public class SearchActivity extends AppCompatActivity implements Adapter.Recycle
         Intent intent = new Intent(this, MapsActivity.class);
         TextView textView = (TextView) view.findViewById(R.id.row_textview);
 
-        intent.putExtra("Nombre", getIntent().getStringExtra("name"));
+        intent.putExtra("name", getIntent().getStringExtra("name"));
         startActivityForResult(intent, 0);
     }
 }
