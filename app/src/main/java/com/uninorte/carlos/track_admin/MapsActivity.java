@@ -23,7 +23,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1 ;
@@ -31,6 +34,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private FirebaseDatabase database;
     private DatabaseReference myRef;
     String key,fi,ff;
+    Date fei,fef;
     private String TAG= "FirebaseLog";
     boolean sw=false;
     ArrayList<String> latit=new ArrayList();
@@ -40,9 +44,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        final SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm");
         key=getIntent().getStringExtra("name");
         fi=getIntent().getStringExtra("keyi").toString();
         ff=getIntent().getStringExtra("keyf").toString();
+        try {
+            fei=formatter.parse(fi);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            fef=formatter.parse(ff);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -59,24 +74,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 for (DataSnapshot child :
                         dataSnapshot.getChildren()) {
                     String x=child.getKey().substring(0,child.getKey().length()-3);
-                    if(child.getKey().substring(0,child.getKey().length()-3).equals(fi)) {
-                        sw=true;
+
+                    Date date1;
+                    try {
+                        date1=formatter.parse(x);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                        date1=null;
                     }
-                    if (!child.getKey().substring(0,child.getKey().length()-3).equals(ff) && sw==true) {
+                    if(date1.before(fef) && date1.after(fei)){
                         String lat=child.child("lat").getValue().toString();
                         String lon=child.child("lon").getValue().toString();
                         //Log.d("FirebaseLog", "onDataChange: " + child.getKey());
                         rectOptions.add(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));
                         latLng = new LatLng(Double.parseDouble(lat), Double.parseDouble(lon));
                     }
-                    if(child.getKey().substring(0,child.getKey().length()-3).equals(ff) && sw==true) {
-                        String lat=child.child("lat").getValue().toString();
-                        String lon=child.child("lon").getValue().toString();
-                        sw = false;
-                        Log.d("FirebaseLog", "onDataChange: " + child.getKey());
-                        rectOptions.add(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));
-                    }
-
                 }
 
                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
