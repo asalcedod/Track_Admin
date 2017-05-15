@@ -1,6 +1,7 @@
 package com.uninorte.carlos.track_admin;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
@@ -73,8 +74,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
                 @Override
                 public void onClick(View arg0) {
-                    ;
-                    // TODO Auto-generated method stub
+                    context=itemView.getContext();
+                    Intent detail = new Intent(context.getApplicationContext(),filterActivity.class);
+                    detail.putExtra("name",mTextView.getText().toString());
+                    context.startActivity(detail);
                 }
 
             });
