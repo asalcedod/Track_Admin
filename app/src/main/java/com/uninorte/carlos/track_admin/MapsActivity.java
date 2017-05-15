@@ -30,11 +30,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private FirebaseDatabase database;
     private DatabaseReference myRef;
+    String key,fi,ff;
+    private String TAG= "FirebaseLog";
+    boolean sw=false;
+    ArrayList<String> latit=new ArrayList();
+    ArrayList<String> longt=new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        key=getIntent().getStringExtra("name");
+        fi=getIntent().getStringExtra("keyi").toString();
+        ff=getIntent().getStringExtra("keyf").toString();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -48,10 +56,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot child :
                         dataSnapshot.getChildren()) {
-                    String lat = child.child("lat").getValue().toString();
-                    String lon = child.child("lon").getValue().toString().substring(1,child.child("lon").getValue().toString().length());
-                    Log.d("FirebaseLog", "onDataChange: "+lat+lon);
-                    rectOptions.add(new LatLng(Double.parseDouble(lat),Double.parseDouble(lon)));
+                    String x=child.getKey().substring(0,child.getKey().length()-3);
+                    if(child.getKey().substring(0,child.getKey().length()-3).equals(fi)) {
+                        sw=true;
+                    }
+                    if (!child.getKey().substring(0,child.getKey().length()-3).equals(ff) && sw==true) {
+                        String lat=child.child("lat").getValue().toString();
+                        String lon=child.child("lon").getValue().toString().substring(1, child.child("lon").getValue().toString().length());
+                        //Log.d("FirebaseLog", "onDataChange: " + child.getKey());
+                        rectOptions.add(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));
+
+                    }
+                    if(child.getKey().substring(0,child.getKey().length()-3).equals(ff) && sw==true) {
+                        String lat=child.child("lat").getValue().toString();
+                        String lon=child.child("lon").getValue().toString().substring(1, child.child("lon").getValue().toString().length());
+                        sw = false;
+                        Log.d("FirebaseLog", "onDataChange: " + child.getKey());
+                        rectOptions.add(new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)));
+                    }
                 }
                 Polyline polyline = mMap.addPolyline(rectOptions);
             }
@@ -61,7 +83,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot data:dataSnapshot.getChildren()
+                        ) {
+                    if(data.getKey().equals(key)) {
+                        Log.d(TAG, "onDataChange: " + data.getValue());
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
@@ -93,11 +132,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             mMap = googleMap;
-            LatLng latLng = new LatLng(-34, 151);
+            LatLng latLng = new LatLng(10.98, -74.83);
             CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 17);
             googleMap.animateCamera(cameraUpdate);
             googleMap.setMyLocationEnabled(true);
-            googleMap.addMarker(new MarkerOptions().position(latLng).title("Marker in Sydney"));
+            googleMap.addMarker(new MarkerOptions().position(latLng).title("Here"));
             mMap.setMyLocationEnabled(true);
         } else {
             // Show rationale and request permission.

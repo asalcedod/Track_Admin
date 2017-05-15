@@ -23,13 +23,17 @@ import java.util.List;
 public class filterActivity extends AppCompatActivity {
     final Calendar c = Calendar.getInstance();
     public Spinner diai,mesi,añoi,diaf,mesf,añof,horai,mini,horaf,minf;
-    int diain,mesin,añoin,diafi,mesfi,añofi;
-    String horain,minin,horafi,minfi,key,key2;
+    String diain;
+    String mesin;
+    String añoin;
+    int diafi;
+    String mesfi;
+    String añofi;
+    String horain,minin,horafi,minfi,key,key1,key2;
     int maxYear = c.get(Calendar.YEAR) - 20; // this year ( 2011 ) - 20 = 1991
     int maxMonth = c.get(Calendar.MONTH);
     int maxDay = c.get(Calendar.DAY_OF_MONTH);
     private DatabaseReference mDatabase;
-    private String TAG= "FirebaseLog";
     int minYear = 1960;
     int minMonth = 0; // january
     int minDay = 25;
@@ -40,7 +44,6 @@ public class filterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_filter);
         key=getIntent().getStringExtra("name");
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
         diai = (Spinner) findViewById(R.id.diai);
         diaf = (Spinner) findViewById(R.id.diaf);
         mesi = (Spinner) findViewById(R.id.mesi);
@@ -53,7 +56,11 @@ public class filterActivity extends AppCompatActivity {
         minf = (Spinner) findViewById(R.id.minf);
         List<String> dias = new ArrayList<String>();
         for(int i=0;i<31;i++){
-            dias.add(""+(i+1));
+            if(i<9) {
+                dias.add("0" + (i + 1));
+            }else{
+                dias.add("" + (i + 1));
+            }
         }
         ArrayAdapter<String> dia1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dias);
         dia1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -61,12 +68,12 @@ public class filterActivity extends AppCompatActivity {
         diai.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                diain = position+1;
+                diain = parent.getItemAtPosition(position).toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                diain=0;
+                diain="";
             }
         });
         ArrayAdapter<String> dia2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, dias);
@@ -85,7 +92,11 @@ public class filterActivity extends AppCompatActivity {
         });
         List<String> meses = new ArrayList<String>();
         for(int i=0;i<12;i++){
-            meses.add(""+(i+1));
+            if(i<9) {
+                meses.add("0" + (i + 1));
+            }else{
+                meses.add("" + (i + 1));
+            }
         }
         ArrayAdapter<String> mes1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, meses);
         mes1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -93,12 +104,12 @@ public class filterActivity extends AppCompatActivity {
         mesi.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mesin = position+1;
+                mesin = parent.getItemAtPosition(position).toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mesin=0;
+                mesin="";
             }
         });
         ArrayAdapter<String> mes2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, meses);
@@ -107,12 +118,12 @@ public class filterActivity extends AppCompatActivity {
         mesf.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mesfi = position+1;
+                mesfi = parent.getItemAtPosition(position).toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mesfi=0;
+                mesfi="";
             }
         });
         List<String> años = new ArrayList<String>();
@@ -125,12 +136,12 @@ public class filterActivity extends AppCompatActivity {
         añoi.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                añoin = Integer.parseInt(parent.getItemAtPosition(position).toString());
+                añoin = parent.getItemAtPosition(position).toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                añoin=0;
+                añoin="0";
             }
         });
         ArrayAdapter<String> año2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, años);
@@ -139,12 +150,12 @@ public class filterActivity extends AppCompatActivity {
         añof.setOnItemSelectedListener(new Spinner.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                añofi = Integer.parseInt(parent.getItemAtPosition(position).toString());
+                añofi = parent.getItemAtPosition(position).toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                añofi=0;
+                añofi="00";
             }
         });
         List<String> horas = new ArrayList<String>();
@@ -222,26 +233,12 @@ public class filterActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference();
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot data:dataSnapshot.getChildren()
-                        ) {
-                    if(data.getKey().equals(key)) {
-                        Log.d(TAG, "onDataChange: " + data.getValue());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        key1=añoin+"-"+mesin+"-"+diain+" "+horain+":"+minin;
+        key2=añofi+"-"+mesfi+"-"+diafi+" "+horafi+":"+minfi;
         Intent intent = new Intent(this,MapsActivity.class);
         intent.putExtra("name",getIntent().getStringExtra("name"));
+        intent.putExtra("keyi",key1);
+        intent.putExtra("keyf",key2);
         startActivity(intent);
         finish();
     }
